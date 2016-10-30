@@ -11,5 +11,6 @@ LazyData: true
 Imports:
     tibble
 Suggests:
-    testthat
+    testthat,
+    covr
 RoxygenNote: 5.0.1
