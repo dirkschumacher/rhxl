@@ -7,6 +7,8 @@ rhxl
 
 Humanitarian Exchange Language in R (work in progress)
 
+The goal of this package is to provide functions to handle datasets with HXL tags. It is currently work in progress. If you have any ideas on how to further develop the package, please feel free to open an issue or a pull request.
+
 > HXL is a different kind of data standard, designed to improve information sharing during a humanitarian crisis without adding extra reporting burdens. [hxlstandard.org](http://hxlstandard.org/standard/1_0final/)
 
 Install
