@@ -16,15 +16,25 @@ as_hxl.data.frame <- function(x) {
 convert_df_to_hxl <- function(x) {
   tbl <- tibble::as_tibble(x)
   schema_row <- find_schema_row(tbl)
+  schema_eq_colnames <- schema_row == 0
   if (schema_row == -1) {
     warning("No schema found")
+    schema_definition <- rep.int(NA_character_, ncol(x))
+  } else if (schema_eq_colnames) {
+    schema_definition <- colnames(x)
   }
   base_tbl <- if (schema_row > 0) {
-    tbl[-schema_row, ]
+    schema_definition <- as.character(apply(tbl[schema_row, ],
+                                            2, as.character))
+    new_tbl <- tbl[-schema_row, ]
+    new_tbl[] <- lapply(new_tbl, as.character)
+    tibble::as_tibble(suppressMessages(readr::type_convert(new_tbl)))
   } else {
     tbl
   }
-  structure(base_tbl, class = c("tbl_hxl", class(x)))
+  structure(base_tbl,
+            schema_vector = schema_definition,
+            class = c("tbl_hxl", class(base_tbl)))
 }
 
 # returns a

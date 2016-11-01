@@ -18,3 +18,13 @@ test_that("is_valid_tag can detect a tag", {
   expect_false(is_valid_tag("#1adm1+fr"))
   expect_false(is_valid_tag("1a#dm1+fr"))
 })
+
+test_that("it warns if no tags are present", {
+  expect_warning(as_hxl(cars))
+})
+
+test_that("it converts the cols into correct format", {
+  result <- as_hxl(read.csv("samples/ws-airports.csv"))
+  expect_true(is.integer(result$id))
+  expect_true(is.character(result$ident))
+})

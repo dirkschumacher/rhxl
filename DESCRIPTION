@@ -10,7 +10,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     tibble,
-    stringr
+    stringr,
+    readr
 Suggests:
     testthat,
     covr

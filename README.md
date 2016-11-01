@@ -11,7 +11,7 @@ Humanitarian Exchange Language in R (work in progress)
 
 ## API
 
-Currently a draft.
+Currently work in progress.
 
 ### as_hxl
 
@@ -23,7 +23,9 @@ data <- as_hxl(readr::read_csv("treatment_centers.csv"))
 
 ### schema
 
-Returns an informative object describing the schema of the dataset. Possibly a data_frame.
+Returns an informative object describing the schema of the dataset. Possibly a data_frame. 
+
+Currently it returns a simple character vector.
 
 ```R
 schema(hxl_table)
@@ -33,6 +35,8 @@ schema(hxl_table)
 ### validate
 
 Validate an HXL data_frame against a schema. Returns a boolean if it matches the schema.
+
+Returns TRUE/FALSE if a table matches a schema.
 
 ```R
 validate(hxl_table, c("#adm1", "#adm2", "#affected"))

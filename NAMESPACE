@@ -2,3 +2,7 @@
 
 S3method(as_hxl,data.frame)
 export(as_hxl)
+export(is.hxl)
+export(is_hxl)
+export(schema)
+export(validate)
