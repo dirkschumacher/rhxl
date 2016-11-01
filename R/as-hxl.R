@@ -28,11 +28,11 @@ convert_df_to_hxl <- function(x) {
                                             2, as.character))
     new_tbl <- tbl[-schema_row, ]
     new_tbl[] <- lapply(new_tbl, as.character)
-    tibble::as_tibble(suppressMessages(readr::type_convert(new_tbl)))
+    suppressMessages(readr::type_convert(new_tbl))
   } else {
     tbl
   }
-  structure(base_tbl,
+  structure(tibble::as_tibble(base_tbl),
             schema_vector = schema_definition,
             class = c("tbl_hxl", class(base_tbl)))
 }
