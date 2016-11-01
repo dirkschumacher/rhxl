@@ -1,4 +1,7 @@
 
+#' Converts an object to an hxl data_frame
+#' @param x the object
+#' @return a hxl_tbl data_frame
 #' @export
 as_hxl <- function(x) {
   UseMethod("as_hxl", x)
