@@ -1,11 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-rhxl
-====
+Humanitarian Exchange Language in R
+===================================
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/dirkschumacher/rhxl?branch=master&svg=true)](https://ci.appveyor.com/project/dirkschumacher/rhxl) [![Travis-CI Build Status](https://travis-ci.org/dirkschumacher/rhxl.svg?branch=master)](https://travis-ci.org/dirkschumacher/rhxl) [![Coverage Status](https://img.shields.io/codecov/c/github/dirkschumacher/rhxl/master.svg)](https://codecov.io/github/dirkschumacher/rhxl?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rhxl)](https://cran.r-project.org/package=rhxl)
-
-Humanitarian Exchange Language in R (work in progress)
 
 The goal of this package is to provide functions to handle datasets with HXL tags. It is currently work in progress. If you have any ideas on how to further develop the package, please feel free to open an issue or a pull request.
 
@@ -73,7 +71,7 @@ With this information you could for example write a function that can automatica
 API
 ---
 
-Currently work in progress.
+Currently more a draft, than a stable API. Happy to hear your thoughts.
 
 ### as\_hxl
 
