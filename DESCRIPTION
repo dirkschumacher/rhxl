@@ -9,11 +9,11 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    dplyr,
     tibble,
     stringr,
     readr
 Suggests:
-    dplyr,
     testthat,
     covr
 RoxygenNote: 5.0.1

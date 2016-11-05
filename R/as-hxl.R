@@ -62,6 +62,7 @@ is_valid_tag <- function(tag) {
 # converts a schema df to a string
 # params: ncols number of columns of the orig. data_frame
 # params schema_df the schema as a data.frame
+#' @importFrom utils head
 schema_df_to_str <- function(ncols, schema_df) {
   stopifnot(tibble::is.tibble(schema_df))
   stopifnot(ncols >= 1)
@@ -91,19 +92,26 @@ schema_to_df <- function(schema_vector) {
   schema <- (lapply(seq_len(length(schema_vector)), function(col_idx) {
     x <- schema_vector[col_idx]
     if (!is.na(x) && is_valid_tag(x)) {
-      tags <- stringr::str_extract(x, "^#[a-z][a-z0-9_]*")
-      tags <- stringr::str_sub(tags, start = 2)
-      attribute_pattern <- "\\+(\\s*[a-z][a-z0-9_]*)"
-      attributes <- unlist(stringr::str_extract_all(x, attribute_pattern))
-      attributes <- stringr::str_sub(attributes, start = 2)
-      if (length(attributes) == 0) {
-        attributes <- NA_character_
-      }
-      data.frame(tag = tags, attribute = attributes,
+      ptags <- parse_tag(x)
+      data.frame(tag = ptags$tag, attribute = ptags$attributes,
                  column_idx = col_idx, stringsAsFactors = FALSE)
     } else {
       NULL
     }
   }))
   tibble::as_data_frame(dplyr::bind_rows(schema))
+}
+
+parse_tag <- function(tag) {
+  stopifnot(length(tag) == 1)
+  stopifnot(!is.na(tag) && is_valid_tag(tag))
+  tags <- stringr::str_extract(tag, "^#[a-z][a-z0-9_]*")
+  tags <- stringr::str_sub(tags, start = 2)
+  attribute_pattern <- "\\+(\\s*[a-z][a-z0-9_]*)"
+  attributes <- unlist(stringr::str_extract_all(tag, attribute_pattern))
+  attributes <- stringr::str_sub(attributes, start = 2)
+  if (length(attributes) == 0) {
+    attributes <- NA_character_
+  }
+  list(tag = tags, attributes = attributes)
 }

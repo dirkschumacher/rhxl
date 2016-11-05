@@ -33,7 +33,7 @@ To install the current development version use devtools:
 devtools::install_github("dirkschumacher/rhxl")
 ```
 
-## Example
+## API by Example
 
 Read in the aiports of Viet Nam.
 
@@ -46,59 +46,26 @@ head(hxl_data)
 You can get the schema as a tidy long table:
 
 ```{r}
-schema(hxl_data)
+hxl_schema(hxl_data)
 ```
 
 Or as a character vector in the order of the columns:
 
 ```{r}
-schema_chr(hxl_data)
+hxl_schema_chr(hxl_data)
 ```
-
 
 We can also test, if a dataset supports a schema. For example, we could test if the dataset has lat/lng coordinates.
 
 ```{r}
-validate(hxl_data, c("#geo +lat", "#geo +lon"))
+hxl_validate(hxl_data, c("#geo +lat", "#geo +lon"))
 ```
 
 With this information you could for example write a function that can automatically display a dataset on a map - without much configuration by the user. It also makes sharing of information easier.
 
-## API
+In addition you can select certain columns based on tags:
 
-Currently more a draft, than a stable API. Happy to hear your thoughts.
-
-### as_hxl
-
-`as_hxl`converts an object to an HXL data_frame. It returns a `tibble` with additional meta data for each column. 
-
-```R
-data <- as_hxl(readr::read_csv("treatment_centers.csv"))
-```
-
-### schema
-
-Returns a data.frame describing the schema. It maps tags/attributes to column indexes
-
-```R
-schema(hxl_table)
-```
-
-### schema_chr
-
-Returns a character sequence of tags/attributes in the order of columns of the original data.frame.
-
-```R
-schema_chr(hxl_table)
-```
-
-### validate
-
-Validate an HXL data_frame against a schema. Returns a boolean if it matches the schema.
-
-Returns TRUE/FALSE if a table matches a schema.
-
-```R
-validate(hxl_table, c("#adm1", "#adm2", "#affected"))
+```{r}
+hxl_select(hxl_data, c("#geo +lat", "#geo +lon"))
 ```
 

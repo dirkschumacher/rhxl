@@ -18,8 +18,8 @@ To install the current development version use devtools:
 devtools::install_github("dirkschumacher/rhxl")
 ```
 
-Example
--------
+API by Example
+--------------
 
 Read in the aiports of Viet Nam.
 
@@ -46,7 +46,7 @@ head(hxl_data)
 You can get the schema as a tidy long table:
 
 ``` r
-schema(hxl_data)
+hxl_schema(hxl_data)
 #> # A tibble: 35 × 3
 #>      tag attribute column_idx
 #>    <chr>     <chr>      <int>
@@ -66,7 +66,7 @@ schema(hxl_data)
 Or as a character vector in the order of the columns:
 
 ``` r
-schema_chr(hxl_data)
+hxl_schema_chr(hxl_data)
 #>  [1] "#meta +id"                  "#meta +code"               
 #>  [3] "#loc +airport +type"        "#loc +airport +name"       
 #>  [5] "#geo +lat"                  "#geo +lon"                 
@@ -82,47 +82,28 @@ schema_chr(hxl_data)
 We can also test, if a dataset supports a schema. For example, we could test if the dataset has lat/lng coordinates.
 
 ``` r
-validate(hxl_data, c("#geo +lat", "#geo +lon"))
+hxl_validate(hxl_data, c("#geo +lat", "#geo +lon"))
 #> [1] TRUE
 ```
 
 With this information you could for example write a function that can automatically display a dataset on a map - without much configuration by the user. It also makes sharing of information easier.
 
-API
----
-
-Currently more a draft, than a stable API. Happy to hear your thoughts.
-
-### as\_hxl
-
-`as_hxl`converts an object to an HXL data\_frame. It returns a `tibble` with additional meta data for each column.
+In addition you can select certain columns based on tags:
 
 ``` r
-data <- as_hxl(readr::read_csv("treatment_centers.csv"))
-```
-
-### schema
-
-Returns a data.frame describing the schema. It maps tags/attributes to column indexes
-
-``` r
-schema(hxl_table)
-```
-
-### schema\_chr
-
-Returns a character sequence of tags/attributes in the order of columns of the original data.frame.
-
-``` r
-schema_chr(hxl_table)
-```
-
-### validate
-
-Validate an HXL data\_frame against a schema. Returns a boolean if it matches the schema.
-
-Returns TRUE/FALSE if a table matches a schema.
-
-``` r
-validate(hxl_table, c("#adm1", "#adm2", "#affected"))
+hxl_select(hxl_data, c("#geo +lat", "#geo +lon"))
+#> # A tibble: 47 × 2
+#>    latitude_deg longitude_deg
+#>           <dbl>         <dbl>
+#> 1      10.81880      106.6520
+#> 2      21.22120      105.8070
+#> 3      16.04390      108.1990
+#> 4      11.99820      109.2190
+#> 5      10.16980      103.9931
+#> 6      16.40150      107.7030
+#> 7      12.22750      109.1920
+#> 8      10.97670      106.8180
+#> 9       8.73183      106.6330
+#> 10     20.81940      106.7250
+#> # ... with 37 more rows
 ```
