@@ -33,7 +33,7 @@ convert_df_to_hxl <- function(x) {
     tbl
   }
   structure(tibble::as_tibble(base_tbl),
-            schema_vector = schema_definition,
+            schema_df = schema_to_df(schema_definition),
             class = c("tbl_hxl", class(base_tbl)))
 }
 
@@ -57,4 +57,53 @@ is_valid_tag <- function(tag) {
   ltag <- stringr::str_to_lower(stringr::str_trim(tag))
   pattern <- "^#[a-z][a-z0-9_]*(\\s+\\+\\s*[a-z][a-z0-9_]*)*"
   stringr::str_detect(ltag, pattern)
+}
+
+# converts a schema df to a string
+# params: ncols number of columns of the orig. data_frame
+# params schema_df the schema as a data.frame
+schema_df_to_str <- function(ncols, schema_df) {
+  stopifnot(tibble::is.tibble(schema_df))
+  stopifnot(ncols >= 1)
+  stopifnot(length(ncols) == 1)
+  vapply(seq_len(ncols), function(x) {
+    col_schema <- schema_df[schema_df$column_idx == x, ]
+    if (nrow(col_schema) == 0) {
+      NA_character_
+    } else {
+      tag <- head(col_schema$tag, 1)
+      schema_attr <- col_schema$attribute
+      no_attributes <- all(is.na(schema_attr))
+      stopifnot(length(schema_attr) == 1 || !no_attributes)
+      schema_attr <- if (no_attributes) {
+        ""
+      } else {
+        paste0(" ", paste0(paste0("+", schema_attr), collapse = " "))
+      }
+      paste0("#", tag, schema_attr)
+    }
+  }, character(1))
+}
+
+schema_to_df <- function(schema_vector) {
+  stopifnot(is.character(schema_vector))
+  schema_vector <- stringr::str_to_lower(stringr::str_trim(schema_vector))
+  schema <- (lapply(seq_len(length(schema_vector)), function(col_idx) {
+    x <- schema_vector[col_idx]
+    if (!is.na(x) && is_valid_tag(x)) {
+      tags <- stringr::str_extract(x, "^#[a-z][a-z0-9_]*")
+      tags <- stringr::str_sub(tags, start = 2)
+      attribute_pattern <- "\\+(\\s*[a-z][a-z0-9_]*)"
+      attributes <- unlist(stringr::str_extract_all(x, attribute_pattern))
+      attributes <- stringr::str_sub(attributes, start = 2)
+      if (length(attributes) == 0) {
+        attributes <- NA_character_
+      }
+      data.frame(tag = tags, attribute = attributes,
+                 column_idx = col_idx, stringsAsFactors = FALSE)
+    } else {
+      NULL
+    }
+  }))
+  tibble::as_data_frame(dplyr::bind_rows(schema))
 }

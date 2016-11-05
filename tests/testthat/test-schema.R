@@ -1,7 +1,7 @@
 context("schema")
 
 test_that("one can get a schema of a HXL tibble", {
-  result <- schema(as_hxl(read.csv("samples/ws-airports.csv")))
+  result <- schema_chr(as_hxl(read.csv("samples/ws-airports.csv")))
   expect_equal(
     c("#meta +id", "#meta +code", "#loc +airport +type",
       "#loc +airport +name", "#geo +lat", "#geo +lon",
@@ -29,11 +29,16 @@ test_that("it works when schema is in colnames", {
   x <- read.csv("samples/ws-airports.csv")
   x <- x[-1, ]
   colnames(x) <- expected_schema
-  result <- schema(as_hxl(x))
+  result <- schema_chr(as_hxl(x))
   expect_equal(expected_schema, result)
 })
 
 test_that("schema has always length equal to cols", {
-  result <- suppressWarnings(schema(as_hxl(cars)))
+  result <- suppressWarnings(schema_chr(as_hxl(cars)))
   expect_equal(rep.int(NA_character_, ncol(cars)), result)
+})
+
+test_that("schema returns a tibble", {
+  result <- schema(as_hxl(read.csv("samples/ws-airports.csv")))
+  expect_equal(35, nrow(result))
 })

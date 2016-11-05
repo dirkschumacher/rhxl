@@ -1,11 +1,21 @@
 #' Get the HXL schema of an HXL tibble
 #' @param x an HXL tibble
-#' @return character vector of tags in the order of the columns
+#' @return a tibble data_frame of the schema
 #' @export
 schema <- function(x) {
   stopifnot(is_hxl(x))
-  attr(x, "schema_vector")
+  attr(x, "schema")
 }
+
+#' Get the HXL schema of an HXL tibble as character
+#' @param x an HXL tibble
+#' @return a character in the same order as the columns
+#' @export
+schema_chr <- function(x) {
+  stopifnot(is_hxl(x))
+  schema_df_to_str(ncol(x), attr(x, "schema"))
+}
+
 
 #' Check if an object is an HXL tibble
 #' @param x an object to test
@@ -32,7 +42,7 @@ is_hxl <- is.hxl
 #' @examples
 #' \dontrun{
 #' some_dataset <- as_hxl(x)
-#' validate(some_dataset, c("#adm1", "adm2 + code"))
+#' validate(some_dataset, c("#adm1", "#adm2 + code"))
 #' }
 #' @export
 validate <- function(x, schema_pattern) {
@@ -44,5 +54,7 @@ validate <- function(x, schema_pattern) {
                              stringr::fixed(""))
   }
   cleaned_pattern <- clean_pattern(schema_pattern)
-  all(cleaned_pattern %in% clean_pattern(schema(x)))
+  all(cleaned_pattern %in% clean_pattern(schema_chr(x)))
 }
+
+

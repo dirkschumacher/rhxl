@@ -10,7 +10,7 @@ schema(x)
 \item{x}{an HXL tibble}
 }
 \value{
-character vector of tags in the order of the columns
+a tibble data_frame of the schema
 }
 \description{
 Get the HXL schema of an HXL tibble

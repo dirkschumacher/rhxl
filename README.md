@@ -43,10 +43,30 @@ head(hxl_data)
 #> #   wikipedia_link <chr>, keywords <chr>, score <int>, last_updated <dttm>
 ```
 
-To get the schema:
+You can get the schema as a tidy long table:
 
 ``` r
 schema(hxl_data)
+#> # A tibble: 35 × 3
+#>      tag attribute column_idx
+#>    <chr>     <chr>      <int>
+#> 1   meta        id          1
+#> 2   meta      code          2
+#> 3    loc   airport          3
+#> 4    loc      type          3
+#> 5    loc   airport          4
+#> 6    loc      name          4
+#> 7    geo       lat          5
+#> 8    geo       lon          6
+#> 9    geo elevation          7
+#> 10   geo        ft          7
+#> # ... with 25 more rows
+```
+
+Or as a character vector in the order of the columns:
+
+``` r
+schema_chr(hxl_data)
 #>  [1] "#meta +id"                  "#meta +code"               
 #>  [3] "#loc +airport +type"        "#loc +airport +name"       
 #>  [5] "#geo +lat"                  "#geo +lon"                 
@@ -83,12 +103,18 @@ data <- as_hxl(readr::read_csv("treatment_centers.csv"))
 
 ### schema
 
-Returns an informative object describing the schema of the dataset. Possibly a data\_frame.
-
-Currently it returns a simple character vector.
+Returns a data.frame describing the schema. It maps tags/attributes to column indexes
 
 ``` r
 schema(hxl_table)
+```
+
+### schema\_chr
+
+Returns a character sequence of tags/attributes in the order of columns of the original data.frame.
+
+``` r
+schema_chr(hxl_table)
 ```
 
 ### validate

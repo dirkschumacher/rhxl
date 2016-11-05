@@ -17,6 +17,26 @@ test_that("is_valid_tag can detect a tag", {
   expect_true(is_valid_tag("#meta +url +wikipedia"))
   expect_false(is_valid_tag("#1adm1+fr"))
   expect_false(is_valid_tag("1a#dm1+fr"))
+  expect_false(is_valid_tag("1a#dm1+fr"))
+})
+
+test_that("schema_to_df converts a schema to df", {
+  schema_vector <- c("#adm1", "#adm2 +code", "#meta+url +wikipedia")
+  result <- schema_to_df(schema_vector) %>%
+    dplyr::arrange(tag, attribute)
+  expect_true(tibble::is.tibble(result))
+  expect_equal(c("adm1", "adm2", "meta"), sort(unique(result$tag)))
+  expect_equal(c(NA_character_, "code", "url", "wikipedia"), result$attribute)
+  expect_equal(c(1, 2, 3, 3), result$column_idx)
+})
+
+test_that("schema_df_to_str converts a schema df to character", {
+  schema_vector <- c(NA_character_, "#adm1",
+                     "#adm2 +code", "#meta+url +wikipedia")
+  s <- schema_to_df(schema_vector)
+  result <- schema_df_to_str(4, s)
+  expect_equal(c(NA_character_, "#adm1",
+                 "#adm2 +code", "#meta +url +wikipedia"), result)
 })
 
 test_that("it warns if no tags are present", {

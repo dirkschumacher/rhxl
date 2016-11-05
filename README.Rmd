@@ -43,12 +43,18 @@ hxl_data <- as_hxl(read.csv(data_url))
 head(hxl_data)
 ```
 
-
-To get the schema:
+You can get the schema as a tidy long table:
 
 ```{r}
 schema(hxl_data)
 ```
+
+Or as a character vector in the order of the columns:
+
+```{r}
+schema_chr(hxl_data)
+```
+
 
 We can also test, if a dataset supports a schema. For example, we could test if the dataset has lat/lng coordinates.
 
@@ -72,14 +78,19 @@ data <- as_hxl(readr::read_csv("treatment_centers.csv"))
 
 ### schema
 
-Returns an informative object describing the schema of the dataset. Possibly a data_frame. 
-
-Currently it returns a simple character vector.
+Returns a data.frame describing the schema. It maps tags/attributes to column indexes
 
 ```R
 schema(hxl_table)
 ```
 
+### schema_chr
+
+Returns a character sequence of tags/attributes in the order of columns of the original data.frame.
+
+```R
+schema_chr(hxl_table)
+```
 
 ### validate
 
