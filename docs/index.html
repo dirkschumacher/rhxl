@@ -18,7 +18,13 @@
       <ul class="nav navbar-nav"><li>
   <a href="reference/index.html">Reference</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/dirkschumacher/rhxl">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -43,8 +49,8 @@
 <p>To install the current development version use devtools:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"dirkschumacher/rhxl"</span>)</code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor"><a href="#example" class="anchor"> </a>Example</h2>
+<div id="api-by-example" class="section level2">
+<h2 class="hasAnchor"><a href="#api-by-example" class="anchor"> </a>API by Example</h2>
 <p>Read in the aiports of Viet Nam.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data_url &lt;-<span class="st"> "http://ourairports.com/countries/VN/airports.hxl"</span>
 hxl_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/as_hxl.html">as_hxl</a></span>(<span class="kw">read.csv</span>(data_url))
@@ -95,38 +101,31 @@ hxl_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/as_hx
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hxl_validate.html">hxl_validate</a></span>(hxl_data, <span class="kw">c</span>(<span class="st">"#geo +lat"</span>, <span class="st">"#geo +lon"</span>))
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>With this information you could for example write a function that can automatically display a dataset on a map - without much configuration by the user. It also makes sharing of information easier.</p>
-</div>
-<div id="api" class="section level2">
-<h2 class="hasAnchor"><a href="#api" class="anchor"> </a>API</h2>
-<p>Currently more a draft, than a stable API. Happy to hear your thoughts.</p>
-<div id="as_hxl" class="section level3">
-<h3 class="hasAnchor"><a href="#as_hxl" class="anchor"> </a>as_hxl</h3>
-<p><code>as_hxl</code>converts an object to an HXL data_frame. It returns a <code>tibble</code> with additional meta data for each column.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="reference/as_hxl.html">as_hxl</a></span>(readr::<span class="kw">read_csv</span>(<span class="st">"treatment_centers.csv"</span>))</code></pre></div>
-</div>
-<div id="schema" class="section level3">
-<h3 class="hasAnchor"><a href="#schema" class="anchor"> </a>schema</h3>
-<p>Returns a data.frame describing the schema. It maps tags/attributes to column indexes</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hxl_schema.html">hxl_schema</a></span>(hxl_table)</code></pre></div>
-</div>
-<div id="schema_chr" class="section level3">
-<h3 class="hasAnchor"><a href="#schema_chr" class="anchor"> </a>schema_chr</h3>
-<p>Returns a character sequence of tags/attributes in the order of columns of the original data.frame.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hxl_schema_chr.html">hxl_schema_chr</a></span>(hxl_table)</code></pre></div>
-</div>
-<div id="validate" class="section level3">
-<h3 class="hasAnchor"><a href="#validate" class="anchor"> </a>validate</h3>
-<p>Validate an HXL data_frame against a schema. Returns a boolean if it matches the schema.</p>
-<p>Returns TRUE/FALSE if a table matches a schema.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hxl_validate.html">hxl_validate</a></span>(hxl_table, <span class="kw">c</span>(<span class="st">"#adm1"</span>, <span class="st">"#adm2"</span>, <span class="st">"#affected"</span>))</code></pre></div>
-</div>
+<p>In addition you can select certain columns based on tags:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hxl_select.html">hxl_select</a></span>(hxl_data, <span class="kw">c</span>(<span class="st">"#geo +lat"</span>, <span class="st">"#geo +lon"</span>))
+<span class="co">#&gt; # A tibble: 47 &times; 2</span>
+<span class="co">#&gt;    latitude_deg longitude_deg</span>
+<span class="co">#&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span>
+<span class="co">#&gt; 1      10.81880      106.6520</span>
+<span class="co">#&gt; 2      21.22120      105.8070</span>
+<span class="co">#&gt; 3      16.04390      108.1990</span>
+<span class="co">#&gt; 4      11.99820      109.2190</span>
+<span class="co">#&gt; 5      10.16980      103.9931</span>
+<span class="co">#&gt; 6      16.40150      107.7030</span>
+<span class="co">#&gt; 7      12.22750      109.1920</span>
+<span class="co">#&gt; 8      10.97670      106.8180</span>
+<span class="co">#&gt; 9       8.73183      106.6330</span>
+<span class="co">#&gt; 10     20.81940      106.7250</span>
+<span class="co">#&gt; # ... with 37 more rows</span></code></pre></div>
 </div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>License</h2>
+    <h2>Links</h2><ul class="list-unstyled"><li>Browse source code at <br><a href="https://github.com/dirkschumacher/rhxl">https://&#8203;github.com/&#8203;dirkschumacher/&#8203;rhxl</a></li>
+<li>Report a bug at <br><a href="https://github.com/dirkschumacher/rhxl/issues">https://&#8203;github.com/&#8203;dirkschumacher/&#8203;rhxl/&#8203;issues</a></li>
+</ul><h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2><ul class="list-unstyled"><li>Dirk Schumacher <br><small class="roles"> Author, maintainer, copyright&nbsp;holder </small> </li>
 </ul><html><body><h2>Dev status</h2><ul class="list-unstyled"><li><a href="https://ci.appveyor.com/project/dirkschumacher/rhxl">

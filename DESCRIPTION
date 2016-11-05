@@ -8,6 +8,8 @@ Description: Functions to process datasets in the Humanitarian Exchange Language
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/dirkschumacher/rhxl
+BugReports: https://github.com/dirkschumacher/rhxl/issues
 Imports:
     dplyr,
     tibble,
