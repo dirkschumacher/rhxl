@@ -32,9 +32,13 @@ convert_df_to_hxl <- function(x) {
   } else {
     tbl
   }
-  structure(tibble::as_tibble(base_tbl),
-            schema_df = schema_to_df(schema_definition),
-            class = c("tbl_hxl", class(base_tbl)))
+  new_hxl_tbl(base_tbl, schema_to_df(schema_definition))
+}
+
+new_hxl_tbl <- function(base_data, schema_df) {
+  structure(tibble::as_tibble(base_data),
+            schema_df = schema_df,
+            class = c("tbl_hxl", class(base_data)))
 }
 
 # returns a
