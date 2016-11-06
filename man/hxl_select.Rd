@@ -4,12 +4,12 @@
 \alias{hxl_select}
 \title{Select a subset of columns by tags/attributes}
 \usage{
-hxl_select(hxl, tags)
+hxl_select(hxl, tag_pattern)
 }
 \arguments{
 \item{hxl}{an HXL table}
 
-\item{tags}{a character vector of HXL tags
+\item{tag_pattern}{a character vector of HXL tag patterns
 
 It warns if a tag matches more columns.}
 }
@@ -18,5 +18,11 @@ a data.frame in the order of the tags
 }
 \description{
 Select a subset of columns by tags/attributes
+}
+\examples{
+\dontrun{
+hxl_select(hxl_data, "#loc +airport -name")
+hxl_select(hxl_data, c("#loc +airport", "#meta +url +airport"))
+}
 }
 

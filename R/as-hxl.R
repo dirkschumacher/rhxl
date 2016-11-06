@@ -55,7 +55,7 @@ find_schema_row <- function(tbl) {
 
 is_valid_tag <- function(tag) {
   ltag <- stringr::str_to_lower(stringr::str_trim(tag))
-  pattern <- "^#[a-z][a-z0-9_]*(\\s+\\+\\s*[a-z][a-z0-9_]*)*"
+  pattern <- "^#[a-z][a-z0-9_]*(\\s+(\\+|-)\\s*[a-z][a-z0-9_]*)*"
   stringr::str_detect(ltag, pattern)
 }
 
@@ -107,11 +107,17 @@ parse_tag <- function(tag) {
   stopifnot(!is.na(tag) && is_valid_tag(tag))
   tags <- stringr::str_extract(tag, "^#[a-z][a-z0-9_]*")
   tags <- stringr::str_sub(tags, start = 2)
-  attribute_pattern <- "\\+(\\s*[a-z][a-z0-9_]*)"
-  attributes <- unlist(stringr::str_extract_all(tag, attribute_pattern))
-  attributes <- stringr::str_sub(attributes, start = 2)
-  if (length(attributes) == 0) {
-    attributes <- NA_character_
+  parse_attributes <- function(attribute_pattern) {
+    attributes <- unlist(stringr::str_extract_all(tag, attribute_pattern))
+    attributes <- stringr::str_sub(attributes, start = 2)
+    if (length(attributes) == 0) {
+      attributes <- NA_character_
+    }
+    attributes
   }
-  list(tag = tags, attributes = attributes)
+  attributes <- parse_attributes("\\+(\\s*[a-z][a-z0-9_]*)")
+  excluded_attributes <- parse_attributes("-(\\s*[a-z][a-z0-9_]*)")
+  list(tag = tags,
+       attributes = attributes,
+       excluded_attributes = excluded_attributes)
 }

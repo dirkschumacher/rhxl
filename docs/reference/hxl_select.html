@@ -78,14 +78,14 @@
     <p>Select a subset of columns by tags/attributes</p>
     
 
-    <pre><span class='fu'>hxl_select</span>(<span class='no'>hxl</span>, <span class='no'>tags</span>)</pre>
+    <pre><span class='fu'>hxl_select</span>(<span class='no'>hxl</span>, <span class='no'>tag_pattern</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>hxl</dt>
       <dd>an HXL table</dd>
-      <dt>tags</dt>
-      <dd>a character vector of HXL tags
+      <dt>tag_pattern</dt>
+      <dd>a character vector of HXL tag patterns
 
 It warns if a tag matches more columns.</dd>
     </dl>
@@ -95,6 +95,11 @@ It warns if a tag matches more columns.</dd>
     <p>a data.frame in the order of the tags</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># hxl_select(hxl_data, "#loc +airport -name")</span>
+<span class='co'># hxl_select(hxl_data, c("#loc +airport", "#meta +url +airport"))</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -102,7 +107,9 @@ It warns if a tag matches more columns.</dd>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

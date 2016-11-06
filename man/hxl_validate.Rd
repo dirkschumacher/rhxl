@@ -20,7 +20,7 @@ Currently does strict matching ignoring whitespaces.
 \examples{
 \dontrun{
 some_dataset <- as_hxl(x)
-validate(some_dataset, c("#adm1", "#adm2 + code"))
+validate(some_dataset, c("#adm1", "#adm2 +code"))
 }
 }
 

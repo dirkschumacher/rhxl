@@ -13,6 +13,7 @@ test_that("find_schema_row can detect schema row", {
 test_that("is_valid_tag can detect a tag", {
   expect_true(is_valid_tag("#adm1"))
   expect_true(is_valid_tag("#adm1+fr"))
+  expect_true(is_valid_tag("#adm1-fr"))
   expect_true(is_valid_tag("  #adm1+fr  "))
   expect_true(is_valid_tag("#meta +url +wikipedia"))
   expect_false(is_valid_tag("#1adm1+fr"))

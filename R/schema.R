@@ -42,7 +42,7 @@ is_hxl <- is.hxl
 #' @examples
 #' \dontrun{
 #' some_dataset <- as_hxl(x)
-#' validate(some_dataset, c("#adm1", "#adm2 + code"))
+#' validate(some_dataset, c("#adm1", "#adm2 +code"))
 #' }
 #' @export
 hxl_validate <- function(x, schema_pattern) {
@@ -60,29 +60,38 @@ hxl_validate <- function(x, schema_pattern) {
 #' Select a subset of columns by tags/attributes
 #'
 #' @param hxl an HXL table
-#' @param tags a character vector of HXL tags
+#' @param tag_pattern a character vector of HXL tag patterns
 #'
 #' It warns if a tag matches more columns.
 #'
 #' @return a data.frame in the order of the tags
 #'
+#' @examples
+#' \dontrun{
+#' hxl_select(hxl_data, "#loc +airport -name")
+#' hxl_select(hxl_data, c("#loc +airport", "#meta +url +airport"))
+#' }
 #' @export
-hxl_select <- function(hxl, tags) {
+hxl_select <- function(hxl, tag_pattern) {
   stopifnot(is_hxl(hxl))
-  stopifnot(length(tags) >= 1 && is.character(tags))
+  stopifnot(length(tag_pattern) >= 1 && is.character(tag_pattern))
   hxl_schema <- hxl_schema(hxl)
-  col_idxes <- unique(unlist(lapply(tags, function(x) {
+  col_idxes <- unique(unlist(lapply(tag_pattern, function(x) {
     stopifnot(!is.na(x) && is_valid_tag(x))
     ptag <- parse_tag(x)
     f_schema <- dplyr::group_by_(hxl_schema[hxl_schema$tag == ptag$tag, ],
                                 .dots = "column_idx")
     if (!all(is.na(ptag$attributes))) {
-      f_schema <- dplyr::filter_(f_schema, ~all(attribute %in% ptag$attributes))
+      f_schema <- dplyr::filter_(f_schema, ~all(ptag$attributes %in% attribute))
+    }
+    if (!all(is.na(ptag$excluded_attributes))) {
+      f_schema <- dplyr::filter_(f_schema,
+                                 ~all(!ptag$excluded_attributes %in% attribute))
     }
     as.integer(f_schema$column_idx)
   })))
   stopifnot(all(col_idxes >= 1) && all(col_idxes <= ncol(hxl)))
-  if (length(tags) != length(col_idxes)) {
+  if (length(tag_pattern) != length(col_idxes)) {
     warning("Tags matched multiple columns.")
   }
   hxl[, col_idxes]
