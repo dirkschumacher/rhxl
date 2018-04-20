@@ -109,7 +109,7 @@ schema_to_df <- function(schema_vector) {
 parse_tag <- function(tag) {
   stopifnot(length(tag) == 1)
   stopifnot(!is.na(tag) && is_valid_tag(tag))
-  tags <- stringr::str_extract(tag, "^#[a-z][a-z0-9_]*")
+  tags <- stringr::str_extract(tag, "^#[a-zA-Z][a-zA-Z0-9_]*")
   tags <- substr(tags, start = 2L, stop = nchar(tags))
   parse_attributes <- function(attribute_pattern) {
     attributes <- unlist(stringr::str_extract_all(tag, attribute_pattern))
@@ -119,8 +119,8 @@ parse_tag <- function(tag) {
     }
     attributes
   }
-  attributes <- parse_attributes("\\+(\\s*[a-z][a-z0-9_]*)")
-  excluded_attributes <- parse_attributes("-(\\s*[a-z][a-z0-9_]*)")
+  attributes <- parse_attributes("\\+(\\s*[a-zA-Z][a-zA-Z0-9_]*)")
+  excluded_attributes <- parse_attributes("-(\\s*[a-zA-Z][a-zA-Z0-9_]*)")
   list(tag = tags,
        attributes = attributes,
        excluded_attributes = excluded_attributes)
