@@ -79,14 +79,14 @@ hxl_select <- function(hxl, tag_pattern) {
   col_idxes <- unique(unlist(lapply(tag_pattern, function(x) {
     stopifnot(!is.na(x) && is_valid_tag(x))
     ptag <- parse_tag(x)
-    f_schema <- dplyr::group_by_(hxl_schema[hxl_schema$tag == ptag$tag, ],
-                                .dots = "column_idx")
+    f_schema <- dplyr::group_by(hxl_schema[hxl_schema$tag == ptag$tag, ],
+                                .data$column_idx)
     if (!all(is.na(ptag$attributes))) {
-      f_schema <- dplyr::filter_(f_schema, ~all(ptag$attributes %in% attribute))
+      f_schema <- dplyr::filter(f_schema, all((!!ptag$attributes) %in% attribute))
     }
     if (!all(is.na(ptag$excluded_attributes))) {
-      f_schema <- dplyr::filter_(f_schema,
-                                 ~all(!ptag$excluded_attributes %in% attribute))
+      f_schema <- dplyr::filter(f_schema,
+                                 all(! (!!ptag$excluded_attributes) %in% attribute))
     }
     as.integer(f_schema$column_idx)
   })))
