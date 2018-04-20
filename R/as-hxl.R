@@ -58,9 +58,9 @@ find_schema_row <- function(tbl) {
 }
 
 is_valid_tag <- function(tag) {
-  ltag <- stringr::str_to_lower(stringr::str_trim(tag))
+  ltag <- tolower(trimws(tag))
   pattern <- "^#[a-z][a-z0-9_]*(\\s+(\\+|-)\\s*[a-z][a-z0-9_]*)*"
-  stringr::str_detect(ltag, pattern)
+  grepl(x = ltag, pattern = pattern)
 }
 
 # converts a schema df to a string
@@ -92,7 +92,7 @@ schema_df_to_str <- function(ncols, schema_df) {
 
 schema_to_df <- function(schema_vector) {
   stopifnot(is.character(schema_vector))
-  schema_vector <- stringr::str_to_lower(stringr::str_trim(schema_vector))
+  schema_vector <- tolower(trimws(schema_vector))
   schema <- (lapply(seq_len(length(schema_vector)), function(col_idx) {
     x <- schema_vector[col_idx]
     if (!is.na(x) && is_valid_tag(x)) {
@@ -110,10 +110,10 @@ parse_tag <- function(tag) {
   stopifnot(length(tag) == 1)
   stopifnot(!is.na(tag) && is_valid_tag(tag))
   tags <- stringr::str_extract(tag, "^#[a-z][a-z0-9_]*")
-  tags <- stringr::str_sub(tags, start = 2)
+  tags <- substr(tags, start = 2L, stop = nchar(tags))
   parse_attributes <- function(attribute_pattern) {
     attributes <- unlist(stringr::str_extract_all(tag, attribute_pattern))
-    attributes <- stringr::str_sub(attributes, start = 2)
+    attributes <- substr(attributes, start = 2L, stop = nchar(attributes))
     if (length(attributes) == 0) {
       attributes <- NA_character_
     }
