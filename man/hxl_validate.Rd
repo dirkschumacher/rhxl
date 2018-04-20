@@ -23,4 +23,3 @@ some_dataset <- as_hxl(x)
 validate(some_dataset, c("#adm1", "#adm2 +code"))
 }
 }
-

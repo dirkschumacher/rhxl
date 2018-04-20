@@ -25,4 +25,3 @@ hxl_select(hxl_data, "#loc +airport -name")
 hxl_select(hxl_data, c("#loc +airport", "#meta +url +airport"))
 }
 }
-

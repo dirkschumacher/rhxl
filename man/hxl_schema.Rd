@@ -15,4 +15,3 @@ a tibble data_frame of the schema
 \description{
 Get the HXL schema of an HXL tibble
 }
-

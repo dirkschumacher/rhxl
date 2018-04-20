@@ -18,4 +18,3 @@ true iff x is an HXL tibble
 \description{
 Check if an object is an HXL tibble
 }
-

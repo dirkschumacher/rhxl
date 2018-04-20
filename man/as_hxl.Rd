@@ -18,4 +18,3 @@ a hxl_tbl data_frame
 \description{
 Converts an object to an hxl data_frame
 }
-

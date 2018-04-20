@@ -15,4 +15,3 @@ a character in the same order as the columns
 \description{
 Get the HXL schema of an HXL tibble as character
 }
-
