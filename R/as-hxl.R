@@ -16,7 +16,7 @@ as_hxl.data.frame <- function(x) {
 convert_df_to_hxl <- function(x) {
   tbl <- tibble::as_tibble(x)
   schema_row <- find_schema_row(tbl)
-  schema_eq_colnames <- schema_row == 0
+  schema_eq_colnames <- schema_row == 0L
   if (schema_row == -1) {
     warning("No schema found", call. = FALSE)
     schema_definition <- rep.int(NA_character_, ncol(x))
@@ -26,7 +26,7 @@ convert_df_to_hxl <- function(x) {
   base_tbl <- if (schema_row > 0) {
     schema_definition <- as.character(apply(tbl[schema_row, ],
                                             2, as.character))
-    new_tbl <- tbl[-schema_row, ]
+    new_tbl <- tbl[-1 * 1L:schema_row, ]
     new_tbl[] <- lapply(new_tbl, as.character)
     suppressMessages(readr::type_convert(new_tbl))
   } else {
