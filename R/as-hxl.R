@@ -103,7 +103,7 @@ schema_to_df <- function(schema_vector) {
       NULL
     }
   }))
-  tibble::as_data_frame(dplyr::bind_rows(schema))
+  tibble::as_data_frame(do.call(rbind, schema))
 }
 
 parse_tag <- function(tag) {
