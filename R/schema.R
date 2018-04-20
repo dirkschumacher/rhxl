@@ -92,11 +92,11 @@ hxl_select <- function(hxl, tag_pattern) {
   })))
   stopifnot(all(col_idxes >= 1) && all(col_idxes <= ncol(hxl)))
   if (length(tag_pattern) < length(col_idxes)) {
-    warning("Tags matched multiple columns.")
+    warning("Tags matched multiple columns.", call. = FALSE)
   }
   row_selector <- seq_len(nrow(hxl))
   if (length(tag_pattern) > length(col_idxes)) {
-    warning("Some tags did not match any columns")
+    warning("Some tags did not match any columns", call. = FALSE)
     row_selector <- integer()
   }
   new_hxl_tbl(hxl[row_selector, col_idxes],

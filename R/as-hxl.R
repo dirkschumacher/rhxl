@@ -18,7 +18,7 @@ convert_df_to_hxl <- function(x) {
   schema_row <- find_schema_row(tbl)
   schema_eq_colnames <- schema_row == 0
   if (schema_row == -1) {
-    warning("No schema found")
+    warning("No schema found", call. = FALSE)
     schema_definition <- rep.int(NA_character_, ncol(x))
   } else if (schema_eq_colnames) {
     schema_definition <- colnames(x)
