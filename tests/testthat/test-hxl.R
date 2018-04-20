@@ -26,9 +26,9 @@ test_that("schema_to_df converts a schema to df", {
   result <- schema_to_df(schema_vector) %>%
     dplyr::arrange(tag, attribute)
   expect_true(tibble::is.tibble(result))
-  expect_equal(c("adm1", "adm2", "meta"), sort(unique(result$tag)))
-  expect_equal(c(NA_character_, "code", "url", "wikipedia"), result$attribute)
-  expect_equal(c(1, 2, 3, 3), result$column_idx)
+  expect_equal(sort(unique(result$tag)), c("adm1", "adm2", "meta"))
+  expect_equal(result$attribute, c(NA_character_, "code", "url", "wikipedia"))
+  expect_equal(result$column_idx, c(1, 2, 3, 3))
 })
 
 test_that("schema_df_to_str converts a schema df to character", {
@@ -36,8 +36,8 @@ test_that("schema_df_to_str converts a schema df to character", {
                      "#adm2 +code", "#meta+url +wikipedia")
   s <- schema_to_df(schema_vector)
   result <- schema_df_to_str(4, s)
-  expect_equal(c(NA_character_, "#adm1",
-                 "#adm2 +code", "#meta +url +wikipedia"), result)
+  expect_equal(result, c(NA_character_, "#adm1",
+                 "#adm2+code", "#meta+url+wikipedia"))
 })
 
 test_that("it warns if no tags are present", {

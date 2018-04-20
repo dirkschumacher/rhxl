@@ -69,25 +69,25 @@ is_valid_tag <- function(tag) {
 #' @importFrom utils head
 schema_df_to_str <- function(ncols, schema_df) {
   stopifnot(tibble::is.tibble(schema_df))
-  stopifnot(ncols >= 1)
-  stopifnot(length(ncols) == 1)
+  stopifnot(ncols >= 1L)
+  stopifnot(length(ncols) == 1L)
   vapply(seq_len(ncols), function(x) {
     col_schema <- schema_df[schema_df$column_idx == x, ]
     if (nrow(col_schema) == 0) {
       NA_character_
     } else {
-      tag <- head(col_schema$tag, 1)
+      tag <- head(col_schema$tag, 1L)
       schema_attr <- col_schema$attribute
       no_attributes <- all(is.na(schema_attr))
-      stopifnot(length(schema_attr) == 1 || !no_attributes)
+      stopifnot(length(schema_attr) == 1L || !no_attributes)
       schema_attr <- if (no_attributes) {
         ""
       } else {
-        paste0(" ", paste0(paste0("+", schema_attr), collapse = " "))
+        paste0(paste0("+", schema_attr), collapse = "")
       }
       paste0("#", tag, schema_attr)
     }
-  }, character(1))
+  }, character(1L))
 }
 
 schema_to_df <- function(schema_vector) {

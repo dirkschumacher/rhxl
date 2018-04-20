@@ -67,4 +67,3 @@ In addition you can select certain columns based on tags:
 ```{r}
 hxl_select(hxl_data, c("#geo +lat", "#geo +lon"))
 ```
-
