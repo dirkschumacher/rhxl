@@ -18,19 +18,32 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+<meta property="og:title" content="Validate a HXL tbl against a schema pattern — hxl_validate" />
+
+<meta property="og:description" content="Currently does strict matching ignoring whitespaces." />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
+
+
   </head>
 
   <body>
@@ -44,11 +57,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">rhxl</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">rhxl</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
@@ -61,6 +84,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -68,25 +92,34 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Validate a HXL tbl against a schema pattern</h1>
+    <small class="dont-index">Source: <a href='https://github.com/dirkschumacher/rhxl/blob/master/R/schema.R'><code>R/schema.R</code></a></small>
+    <div class="hidden name"><code>hxl_validate.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Currently does strict matching ignoring whitespaces.</p>
     
+    </div>
 
-    <pre><span class='fu'>hxl_validate</span>(<span class='no'>x</span>, <span class='no'>schema_pattern</span>)</pre>
+    <pre class="usage"><span class='fu'>hxl_validate</span>(<span class='no'>x</span>, <span class='no'>schema_pattern</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>an HXL tibble</dd>
-      <dt>schema_pattern</dt>
-      <dd>a character vector</dd>
-    </dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an HXL tibble</p></td>
+    </tr>
+    <tr>
+      <th>schema_pattern</th>
+      <td><p>a character vector</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -94,10 +127,10 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># some_dataset &lt;- as_hxl(x)</span>
-<span class='co'># validate(some_dataset, c("#adm1", "#adm2 +code"))</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>some_dataset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_hxl.html'>as_hxl</a></span>(<span class='no'>x</span>)
+<span class='fu'>validate</span>(<span class='no'>some_dataset</span>, <span class='fu'>c</span>(<span class='st'>"#adm1"</span>, <span class='st'>"#adm2 +code"</span>))
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -118,11 +151,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
